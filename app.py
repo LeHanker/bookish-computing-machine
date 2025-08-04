@@ -71,13 +71,13 @@ def solve_schedule(classes, rooms, timeslots, student_enrollments):
 st.title("Class Schedule Solver")
 
 st.sidebar.header("Input Parameters")
-num_classes = st.sidebar.slider("Number of Classes", 5, 30, 10)
-num_rooms = st.sidebar.slider("Number of Rooms", 2, 15, 5)
-num_students = st.sidebar.slider("Number of Students", 10, 100, 50)
-num_teachers = st.sidebar.slider("Number of Teachers", 2, 10, 5)
+# num_classes = st.sidebar.slider("Number of Classes", 5, 30, 10)
+# num_rooms = st.sidebar.slider("Number of Rooms", 2, 15, 5)
+# num_students = st.sidebar.slider("Number of Students", 10, 100, 50)
+# num_teachers = st.sidebar.slider("Number of Teachers", 2, 10, 5)
 
 if st.sidebar.button("Generate Schedule"):
-    classes, rooms, timeslots, student_enrollments = generate_data(num_classes, num_rooms, num_students, num_teachers)
+    classes, rooms, timeslots, student_enrollments = generate_data()
     
     with st.spinner("Finding a valid schedule..."):
         solutions = solve_schedule(classes, rooms, timeslots, student_enrollments)
