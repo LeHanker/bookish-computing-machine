@@ -3,53 +3,26 @@ import streamlit as st
 from constraint import Problem
 import random
 
-def generate_data(num_classes, num_rooms, num_students, num_teachers):
-    """Generates a dataset for the class scheduling CSP based on user inputs."""
-
-    # --- Define Base Data ---
-    teachers = [f'Prof_{i}' for i in range(1, num_teachers + 1)]
-    course_subjects = ['Python', 'DataStruct', 'WebDev', 'AI', 'Algorithms', 'SysDesign', 'Databases', 'Networking', 'OS', 'Security']
-    
-    # --- Generate Rooms ---
-    rooms = {}
-    for i in range(1, num_rooms + 1):
-        room_name = f'Room_{100 + i}'
-        rooms[room_name] = {
-            'capacity': random.choice([30, 50, 60]),
-            'features': ['projector'] if i % 2 == 0 else []
-        }
-
-    # --- Generate Courses ---
-    courses = {}
-    for i in range(1, num_classes + 1):
-        subject = random.choice(course_subjects)
-        course_name = f'C{i}_{subject}'
-        courses[course_name] = {
-            'teacher': random.choice(teachers),
-            'enrollment': random.randint(15, 30),
-            'req': 'projector' if random.random() < 0.3 else None
-        }
-
-    # --- Generate Timeslots ---
-    timeslots = [
-        'Mon_09_11', 'Mon_11_13', 'Mon_14_16',
-        'Tue_09_11', 'Tue_11_13', 'Tue_14_16',
-        'Wed_09_11', 'Wed_11_13', 'Wed_14_16',
-        'Thu_09_11', 'Thu_11_13', 'Thu_14_16',
-        'Fri_09_11', 'Fri_11_13', 'Fri_14_16',
-    ]
-
-    # --- Generate Students and Enrollments ---
-    student_enrollments = {}
-    course_names = list(courses.keys())
-    for i in range(1, num_students + 1):
-        student_name = f'Student_{i}'
-        num_enrolled = random.randint(2, 4)
-        if course_names:
-            enrolled_classes = random.sample(course_names, k=min(num_enrolled, len(course_names)))
-            student_enrollments[student_name] = enrolled_classes
-
-    return courses, rooms, timeslots, student_enrollments
+def generate_data():
+    classes = {
+        'Math': {'teacher': 'Smith', 'enrollment': 10, 'req': None},
+        'Science': {'teacher': 'Jones', 'enrollment': 8, 'req': 'lab'},
+        'History': {'teacher': 'Smith', 'enrollment': 12, 'req': None},
+        'Art': {'teacher': 'Lee', 'enrollment': 6, 'req': None},
+    }
+    rooms = {
+        'Room101': {'capacity': 15, 'features': []},
+        'Lab201': {'capacity': 10, 'features': ['lab']},
+        'Room102': {'capacity': 12, 'features': []},
+    }
+    timeslots = ['MonAM', 'MonPM', 'TueAM', 'TuePM']
+    student_enrollments = {
+        'Alice': ['Math', 'Science'],
+        'Bob': ['Math', 'History'],
+        'Carol': ['Art', 'Science'],
+        'Dave': ['History', 'Art'],
+    }
+    return classes, rooms, timeslots, student_enrollments
 
 def solve_schedule(classes, rooms, timeslots, student_enrollments):
     problem = Problem()
